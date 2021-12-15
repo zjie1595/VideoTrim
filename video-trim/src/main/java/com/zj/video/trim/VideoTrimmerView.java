@@ -17,12 +17,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -163,30 +161,25 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     }
 
     private void videoPrepared(MediaPlayer mp) {
-//        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) mVideoView.getLayoutParams();
-//        int videoWidth = mp.getVideoWidth();
-//        int videoHeight = mp.getVideoHeight();
-//        int placeholderHeight = videoPlaceHolder.getHeight();
-//
-//        float aspectRatio = (float) videoWidth / (float) videoHeight;
-//        int videoViewWidth;
-//        int videoViewHeight;
-//        if (aspectRatio < 1) {
-//            videoViewHeight = placeholderHeight;
-//        }
-//
-////        int screenWidth = mLinearVideo.getWidth();
-////        int screenHeight = mLinearVideo.getHeight();
-//
-////        if (videoHeight > videoWidth) {
-////            lp.width = screenWidth;
-////            lp.height = screenHeight;
-////        } else {
-////            lp.width = screenWidth;
-////            float r = videoHeight / (float) videoWidth;
-////            lp.height = (int) (lp.width * r);
-////        }
-//        mVideoView.setLayoutParams(layoutParams);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) mVideoView.getLayoutParams();
+        int videoWidth = mp.getVideoWidth();
+        int videoHeight = mp.getVideoHeight();
+        int placeholderHeight = videoPlaceHolder.getHeight();
+        int placeholderWidth = videoPlaceHolder.getWidth();
+
+        float aspectRatio = (float) videoWidth / (float) videoHeight;
+        int videoViewWidth;
+        int videoViewHeight;
+        if (aspectRatio < 1) {
+            videoViewHeight = placeholderHeight;
+            videoViewWidth = (int) (placeholderHeight * aspectRatio);
+        } else {
+            videoViewWidth = placeholderWidth;
+            videoViewHeight = (int) (placeholderWidth * aspectRatio);
+        }
+        layoutParams.width = videoViewWidth;
+        layoutParams.height = videoViewHeight;
+        mVideoView.setLayoutParams(layoutParams);
         mDuration = mVideoView.getDuration();
         if (!getRestoreState()) {
             seekTo((int) mRedProgressBarPos);
