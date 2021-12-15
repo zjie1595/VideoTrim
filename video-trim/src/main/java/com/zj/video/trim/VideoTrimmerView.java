@@ -69,9 +69,6 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     private final Handler mAnimationHandler = new Handler();
     private View videoPlaceHolder;
 
-    private long maxDuration = 8 * 1000L; //    视频最多剪切多长时间8s
-    private long miniDuration = 1000L; //    视频最少剪切多长时间1s
-
     public CropAreaView cropView;
 
 //    private ExportCallback exportCallback;
@@ -83,14 +80,6 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     public VideoTrimmerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
-    }
-
-    public void setMaxDuration(long millisecond) {
-        maxDuration = millisecond;
-    }
-
-    public void setMiniDuration(long millisecond) {
-        miniDuration = millisecond;
     }
 
     private void init(Context context) {
@@ -116,24 +105,24 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     private void initRangeSeekBarView() {
         if (mRangeSeekBarView != null) return;
         mLeftProgressPos = 0;
-        if (mDuration <= maxDuration) {
+        if (mDuration <= VideoTrimmerUtil.MAX_SHOOT_DURATION) {
             mThumbsTotalCount = MAX_COUNT_RANGE;
             mRightProgressPos = mDuration;
         } else {
-            mThumbsTotalCount = (int) (mDuration * 1.0f / (maxDuration * 1.0f) * MAX_COUNT_RANGE);
-            mRightProgressPos = maxDuration;
+            mThumbsTotalCount = (int) (mDuration * 1.0f / (VideoTrimmerUtil.MAX_SHOOT_DURATION * 1.0f) * MAX_COUNT_RANGE);
+            mRightProgressPos = VideoTrimmerUtil.MAX_SHOOT_DURATION;
         }
         mVideoThumbRecyclerView.addItemDecoration(new SpacesItemDecoration2(RECYCLER_VIEW_PADDING, mThumbsTotalCount));
         mRangeSeekBarView = new RangeSeekBarView(mContext, mLeftProgressPos, mRightProgressPos);
         mRangeSeekBarView.setSelectedMinValue(mLeftProgressPos);
         mRangeSeekBarView.setSelectedMaxValue(mRightProgressPos);
         mRangeSeekBarView.setStartEndTime(mLeftProgressPos, mRightProgressPos);
-        mRangeSeekBarView.setMinShootTime(miniDuration);
+        mRangeSeekBarView.setMinShootTime(VideoTrimmerUtil.MIN_SHOOT_DURATION);
         mRangeSeekBarView.setNotifyWhileDragging(true);
         mRangeSeekBarView.setOnRangeSeekBarChangeListener(mOnRangeSeekBarChangeListener);
         mSeekBarLayout.addView(mRangeSeekBarView);
         if (mThumbsTotalCount - MAX_COUNT_RANGE > 0) {
-            mAverageMsPx = (mDuration - maxDuration) / (float) (mThumbsTotalCount - MAX_COUNT_RANGE);
+            mAverageMsPx = (mDuration - VideoTrimmerUtil.MAX_SHOOT_DURATION) / (float) (mThumbsTotalCount - MAX_COUNT_RANGE);
         } else {
             mAverageMsPx = 0f;
         }
