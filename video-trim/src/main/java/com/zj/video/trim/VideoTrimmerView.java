@@ -72,7 +72,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     private final Handler mAnimationHandler = new Handler();
     private View videoPlaceHolder;
 
-    private ExportCallback exportCallback;
+//    private ExportCallback exportCallback;
 
     public VideoTrimmerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -283,14 +283,18 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
 //                    mRightProgressPos,
 //                    mOnTrimVideoListener);
 //        }
-        if (exportCallback != null) {
-            exportCallback.onVideoExport(mSourceUri, mLeftProgressPos, mRightProgressPos);
-        }
+//        if (exportCallback != null) {
+//            exportCallback.onVideoExport(mSourceUri, mLeftProgressPos, mRightProgressPos);
+//        }
     }
 
-    public void setExportCallback(ExportCallback callback) {
-        exportCallback = callback;
+    public void export(ExportCallback callback) {
+        callback.onVideoExport(mSourceUri, mLeftProgressPos, mRightProgressPos);
     }
+
+//    public void setExportCallback(ExportCallback callback) {
+//        exportCallback = callback;
+//    }
 
     public interface ExportCallback {
         void onVideoExport(Uri videoUri, long startTime, long endTime);
