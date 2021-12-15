@@ -72,6 +72,8 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     private final Handler mAnimationHandler = new Handler();
     private View videoPlaceHolder;
 
+    public CropAreaView cropView;
+
 //    private ExportCallback exportCallback;
 
     public VideoTrimmerView(Context context, AttributeSet attrs) {
@@ -89,6 +91,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
 
 //        mLinearVideo = findViewById(R.id.layout_surface_view);
         videoPlaceHolder = findViewById(R.id.video_placeholder);
+        cropView = findViewById(R.id.crop_view);
         mVideoView = findViewById(R.id.video_loader);
         mPlayView = findViewById(R.id.play_control);
         mSeekBarLayout = findViewById(R.id.seekBarLayout);
