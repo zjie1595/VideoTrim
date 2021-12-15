@@ -90,7 +90,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
 //        mLinearVideo = findViewById(R.id.layout_surface_view);
         videoPlaceHolder = findViewById(R.id.video_placeholder);
         mVideoView = findViewById(R.id.video_loader);
-        mPlayView = findViewById(R.id.icon_video_play);
+        mPlayView = findViewById(R.id.play_control);
         mSeekBarLayout = findViewById(R.id.seekBarLayout);
         mRedProgressIcon = findViewById(R.id.positionIcon);
         mVideoShootTipTv = findViewById(R.id.video_shoot_tip);
@@ -231,19 +231,19 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     }
 
     private void setUpListeners() {
-        findViewById(R.id.cancelBtn).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onCancelClicked();
-            }
-        });
-
-        findViewById(R.id.finishBtn).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSaveClicked();
-            }
-        });
+//        findViewById(R.id.cancelBtn).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onCancelClicked();
+//            }
+//        });
+//
+//        findViewById(R.id.finishBtn).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onSaveClicked();
+//            }
+//        });
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -257,12 +257,18 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
                 videoCompleted();
             }
         });
-        mPlayView.setOnClickListener(new OnClickListener() {
+        mVideoView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 playVideoOrPause();
             }
         });
+//        mPlayView.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                playVideoOrPause();
+//            }
+//        });
     }
 
     private void onSaveClicked() {
@@ -304,7 +310,12 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     }
 
     private void setPlayPauseViewIcon(boolean isPlaying) {
-        mPlayView.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
+        if (isPlaying) {
+            mPlayView.setVisibility(View.GONE);
+        } else {
+            mPlayView.setVisibility(View.VISIBLE);
+            mPlayView.setImageResource(R.drawable.ic_play);
+        }
     }
 
     private final RangeSeekBarView.OnRangeSeekBarChangeListener mOnRangeSeekBarChangeListener = new RangeSeekBarView.OnRangeSeekBarChangeListener() {
