@@ -133,7 +133,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
         mSourceUri = videoURI;
         mVideoView.setVideoURI(videoURI);
         mVideoView.requestFocus();
-        mVideoShootTipTv.setText(String.format(mContext.getResources().getString(R.string.video_shoot_tip), VideoTrimmerUtil.VIDEO_MAX_TIME));
+        mVideoShootTipTv.setText(mContext.getResources().getString(R.string.video_shoot_tip));
     }
 
     private void startShootVideoThumbs(final Context context, final Uri videoUri, int totalThumbsCount, long startPosition, long endPosition) {
